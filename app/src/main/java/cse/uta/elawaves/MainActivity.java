@@ -4,13 +4,11 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import org.elastos.carrier.Carrier;
 import org.elastos.carrier.exceptions.CarrierException;
 
+import cse.uta.elawaves.Carrier.CarrierCallback;
 import cse.uta.elawaves.Carrier.CarrierImplementation;
-import cse.uta.elawaves.Carrier.Message.CarrierCallback;
-import cse.uta.elawaves.Carrier.Message.CarrierMessage;
-import cse.uta.elawaves.Carrier.Message.OnConnectionMessage;
+import cse.uta.elawaves.Carrier.CarrierMessage;
 
 public class MainActivity extends AppCompatActivity implements FragmentMain.OnFragmentInteractionListener{
 
@@ -25,11 +23,12 @@ public class MainActivity extends AppCompatActivity implements FragmentMain.OnFr
             e.printStackTrace();
         }
 
-        CarrierImplementation.setCallback(CarrierImplementation.ON_CONNECTION, new CarrierCallback() {
+        CarrierImplementation.setCallback(new CarrierCallback() {
             @Override
             public void handleMessage(CarrierMessage message) {
-                System.out.println("CONNECTED TO CARRIER");
-                System.out.println(((OnConnectionMessage) message).status.value());
+                if(message.type == CarrierImplementation.ON_READY){
+                    System.out.println("Carrier is ready");
+                }
             }
         });
     }
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMain.OnFr
     public void onDestroy(){
         super.onDestroy();
 
-        CarrierImplementation.clearCallbacks();
+        CarrierImplementation.clearCallback();
     }
 
     @Override

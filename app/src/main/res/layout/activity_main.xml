@@ -12,7 +12,9 @@
         android:layout_width="395dp"
         android:layout_height="715dp"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph" />
 </android.support.constraint.ConstraintLayout>

@@ -2,14 +2,10 @@ package cse.uta.elawaves.Carrier;
 
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.SparseArray;
 
 import org.elastos.carrier.Carrier;
 import org.elastos.carrier.exceptions.CarrierException;
-
-import cse.uta.elawaves.Carrier.Message.CarrierCallback;
-import cse.uta.elawaves.Carrier.Message.CarrierMessage;
 
 public class CarrierImplementation {
 
@@ -37,33 +33,28 @@ public class CarrierImplementation {
         return instance;
     }
 
-    private static SparseArray<CarrierCallback> callbacks = new SparseArray<>(14);
     private CarrierImplementation(Context context) throws CarrierException {
         Options options = new Options(context.getFilesDir().getParent());
 
-        Carrier.initializeInstance(options,new CarrierHandler(this));
+        Carrier.initializeInstance(options,new CarrierHandler());
 
         Carrier carrier = Carrier.getInstance();
             carrier.start(0);
     }
 
-    public static void setCallback(int i, CarrierCallback callback){
-        callbacks.put(i,callback);
+    private static CarrierCallback callback;
+
+    public static void setCallback(CarrierCallback newCallback){
+        callback = newCallback;
     }
 
-    public static void clearCallbacks(){
-        callbacks.clear();
+    public static void clearCallback(){
+        callback = null;
     }
 
-    public static void removeCallback(int i){
-        callbacks.remove(i);
-    }
-
-    public static void handleMessage(int i, CarrierMessage carrierCallback){
+    public static void handleMessage(CarrierMessage message){
         // Attempt to call all registered callbacks
-        CarrierCallback callback = callbacks.get(i);
-        if (callback != null)
-            callback.handleMessage(carrierCallback);
-
+        if(callback != null)
+            callback.handleMessage(message);
     }
 }

@@ -5,7 +5,7 @@ import org.elastos.carrier.Carrier;
 import java.io.File;
 import java.util.ArrayList;
 
-public class Options extends Carrier.Options {
+class Options extends Carrier.Options {
     Options(String rootPath){
         super();
 
