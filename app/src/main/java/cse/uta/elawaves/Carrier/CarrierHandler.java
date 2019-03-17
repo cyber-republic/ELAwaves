@@ -34,6 +34,8 @@ class CarrierHandler implements org.elastos.carrier.CarrierHandler {
         CarrierMessage carrierMessage = new CarrierMessage();
             carrierMessage.type = CarrierImplementation.ON_READY;
 
+       CarrierImplementation.carrier_ready = true;
+
        CarrierImplementation.handleMessage(carrierMessage);
     }
 

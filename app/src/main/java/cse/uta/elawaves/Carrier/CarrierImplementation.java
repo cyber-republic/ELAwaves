@@ -25,7 +25,8 @@ public class CarrierImplementation {
     public static final int ON_GROUP_INVITE = 13;
 
     private static CarrierImplementation instance;
-
+    private static Context application_context;
+    protected static boolean carrier_ready = false;
     public static CarrierImplementation getInstance(Context context) throws CarrierException {
         if(instance == null)
             instance = new CarrierImplementation(context);
@@ -34,12 +35,19 @@ public class CarrierImplementation {
     }
 
     private CarrierImplementation(Context context) throws CarrierException {
+
+        application_context = context;
+
         Options options = new Options(context.getFilesDir().getParent());
 
         Carrier.initializeInstance(options,new CarrierHandler());
 
         Carrier carrier = Carrier.getInstance();
             carrier.start(0);
+    }
+
+    public static boolean isReady(){
+        return carrier_ready;
     }
 
     private static CarrierCallback callback;
