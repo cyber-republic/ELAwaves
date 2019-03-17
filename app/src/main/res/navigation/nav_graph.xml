@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentMain"
-        android:name="cse.uta.elawaves.FragmentMain"
+        android:name="cse.uta.elawaves.Fragments.FragmentMain"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
 </navigation>
