@@ -5,7 +5,11 @@ import android.content.Context;
 import android.util.SparseArray;
 
 import org.elastos.carrier.Carrier;
+import org.elastos.carrier.FriendInfo;
 import org.elastos.carrier.exceptions.CarrierException;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class CarrierImplementation {
 
@@ -25,10 +29,11 @@ public class CarrierImplementation {
     public static final int ON_GROUP_INVITE = 13;
 
     private static CarrierImplementation instance;
-    private static Context application_context;
-    protected static boolean carrier_ready = false;
 
-    private static Carrier carrier;
+    static HashMap<String,Boolean> friend_connection_status = new HashMap<>();
+    static boolean carrier_ready = false;
+
+    private static Carrier carrier_instance;
 
     public static CarrierImplementation getInstance(Context context) throws CarrierException {
         if(instance == null)
@@ -38,22 +43,18 @@ public class CarrierImplementation {
     }
 
     private CarrierImplementation(Context context) throws CarrierException {
-
-        application_context = context;
-
         Options options = new Options(context.getFilesDir().getParent());
 
         Carrier.initializeInstance(options,new CarrierHandler());
 
-
         Carrier carrier = Carrier.getInstance();
             carrier.start(0);
 
-        carrier = carrier;
+        carrier_instance = carrier;
     }
 
     public static Carrier getCarrier(){
-        return carrier;
+        return carrier_instance;
     }
 
     public static boolean isReady(){
@@ -71,7 +72,6 @@ public class CarrierImplementation {
     }
 
     public static void handleMessage(CarrierMessage message){
-        // Attempt to call all registered callbacks
         if(callback != null)
             callback.handleMessage(message);
     }

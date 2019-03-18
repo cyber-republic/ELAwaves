@@ -64,6 +64,9 @@ class CarrierHandler implements org.elastos.carrier.CarrierHandler {
             carrierMessage.friendID = friendID;
             carrierMessage.connectionStatus = connectionStatus;
 
+       // Keep track of all connected friends
+       CarrierImplementation.friend_connection_status.put(friendID,connectionStatus.value() == 0);
+
        CarrierImplementation.handleMessage(carrierMessage);
     }
 
