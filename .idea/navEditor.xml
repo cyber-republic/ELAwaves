@@ -3,12 +3,12 @@
   <component name="navEditor-manualLayoutAlgorithm2">
     <option name="myPositions">
       <map>
-        <entry key="nav_graph.xml">
+        <entry key="home_graph.xml">
           <value>
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="fragmentMain">
+                  <entry key="friendsFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -23,6 +23,11 @@
                 </map>
               </option>
             </LayoutPositions>
+          </value>
+        </entry>
+        <entry key="nav_graph.xml">
+          <value>
+            <LayoutPositions />
           </value>
         </entry>
       </map>

@@ -27,6 +27,9 @@ public class CarrierImplementation {
     private static CarrierImplementation instance;
     private static Context application_context;
     protected static boolean carrier_ready = false;
+
+    private static Carrier carrier;
+
     public static CarrierImplementation getInstance(Context context) throws CarrierException {
         if(instance == null)
             instance = new CarrierImplementation(context);
@@ -42,8 +45,15 @@ public class CarrierImplementation {
 
         Carrier.initializeInstance(options,new CarrierHandler());
 
+
         Carrier carrier = Carrier.getInstance();
             carrier.start(0);
+
+        carrier = carrier;
+    }
+
+    public static Carrier getCarrier(){
+        return carrier;
     }
 
     public static boolean isReady(){
