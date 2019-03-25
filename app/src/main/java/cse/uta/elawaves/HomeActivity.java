@@ -8,9 +8,10 @@ import android.view.MenuItem;
 
 import org.elastos.carrier.FriendInfo;
 
+import cse.uta.elawaves.Fragments.AddFriendFragment;
 import cse.uta.elawaves.Fragments.FriendsFragment;
 
-public class HomeActivity extends AppCompatActivity implements FriendsFragment.OnFriendSelectedListener {
+public class HomeActivity extends AppCompatActivity implements FriendsFragment.OnFriendSelectedListener, AddFriendFragment.OnAddFriendFragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,11 @@ public class HomeActivity extends AppCompatActivity implements FriendsFragment.O
 
     @Override
     public void onFriendSelected(FriendInfo info) {
+
+    }
+
+    @Override
+    public void onAddFriend(FriendInfo info) {
 
     }
 }
