@@ -22,4 +22,11 @@
             android:id="@+id/action_addFriendFragment_to_friendsFragment"
             app:destination="@id/friendsFragment" />
     </fragment>
+
+	<fragment
+        android:id="@+id/MessagingFragment"
+        android:name="cse.uta.elawaves.Fragments.MessagingFragment"
+        android:label="fragment_messaging"
+        tools:layout="@layout/fragment_messaging" />
+    </fragment>
 </navigation>
