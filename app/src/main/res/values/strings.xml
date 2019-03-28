@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ELAWaves</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">THis is a test</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="button_add_friend">Add Friend</string>
+</resources>
