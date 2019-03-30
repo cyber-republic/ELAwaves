@@ -44,7 +44,6 @@ public class AddFriendFragment extends Fragment{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        System.out.println("ActivityCalled");
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(result != null){
             // Implement Friend adding logic here;

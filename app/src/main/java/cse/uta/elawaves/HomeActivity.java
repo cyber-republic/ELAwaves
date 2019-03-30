@@ -13,6 +13,8 @@ import cse.uta.elawaves.Fragments.FriendsFragment;
 
 public class HomeActivity extends AppCompatActivity implements FriendsFragment.OnFriendSelectedListener, AddFriendFragment.OnAddFriendFragmentListener {
 
+    private FriendInfo current_chat_friend;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,7 @@ public class HomeActivity extends AppCompatActivity implements FriendsFragment.O
 
     @Override
     public void onFriendSelected(FriendInfo info) {
-
+        this.current_chat_friend = info;
     }
 
     @Override

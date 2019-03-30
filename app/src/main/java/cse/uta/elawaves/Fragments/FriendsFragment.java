@@ -19,6 +19,7 @@ import org.elastos.carrier.exceptions.CarrierException;
 import java.util.List;
 
 import androidx.navigation.Navigation;
+import cse.uta.elawaves.Adapter.FriendInfoAdapter;
 import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.R;
 
@@ -41,7 +42,7 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
             e.printStackTrace();
         }
 
-        ArrayAdapter<FriendInfo> friendInfoArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, friends);
+        FriendInfoAdapter friendInfoArrayAdapter = new FriendInfoAdapter(getActivity(), android.R.layout.simple_list_item_1, friends);
 
         setListAdapter(friendInfoArrayAdapter);
 
@@ -65,8 +66,9 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        callback.onFriendSelected((FriendInfo) parent.getAdapter().getItem(position));
     }
+
 
     @Override
     public void onAttach(Context context){
