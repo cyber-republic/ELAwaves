@@ -58,7 +58,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:drawable/ic_menu_send"
-                android:backgroundTint="@color/colorPrimary" />
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="sendMessage" />
         </LinearLayout>
     </ScrollView>
 

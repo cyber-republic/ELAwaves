@@ -1,13 +1,14 @@
 package cse.uta.elawaves.Messages;
 
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Message {
     // Unique ID for every message
     //private int messageID;
     // TimeStamp of the message
-    private LocalDateTime messageTimeStamp;
+    private Timestamp messageTimeStamp;
     // The message itself
     private String message = "";
     // Was this message received or sent
@@ -19,13 +20,13 @@ public class Message {
     // How should this message be ordered if reference is set
     //private int messagePosition = 0;
 
-    Message(String message,boolean received,String address){
+    public Message(String message,boolean received,String address){
         this.message = message;
         this.received = received;
         this.address = address;
     }
 
-    Message(String message,boolean received,String address,LocalDateTime messageTimeStamp){
+    public Message(String message, boolean received, String address, Timestamp messageTimeStamp){
         this(message,received,address);
         this.messageTimeStamp = messageTimeStamp;
     }
@@ -34,7 +35,7 @@ public class Message {
         return message;
     }
 
-    public LocalDateTime getMessageTimeStamp() {
+    public Timestamp getMessageTimeStamp() {
         return messageTimeStamp;
     }
 
