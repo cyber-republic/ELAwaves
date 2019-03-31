@@ -13,7 +13,10 @@ import org.elastos.carrier.exceptions.CarrierException;
 import cse.uta.elawaves.Carrier.CarrierCallback;
 import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.Carrier.CarrierMessage;
+import cse.uta.elawaves.Database.DatabaseHandler;
 import cse.uta.elawaves.Wallet.WalletImplementation;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // Startup Carrier
         Context applicationContext = getApplicationContext();
