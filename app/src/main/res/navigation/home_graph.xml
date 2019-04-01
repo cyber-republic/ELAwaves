@@ -31,4 +31,9 @@
         android:name="cse.uta.elawaves.Fragments.MessagingFragment"
         android:label="fragment_messaging"
         tools:layout="@layout/fragment_messaging" />
+    <fragment
+        android:id="@+id/accountInfoFragment"
+        android:name="cse.uta.elawaves.Fragments.AccountInfoFragment"
+        android:label="fragment_account_info"
+        tools:layout="@layout/fragment_account_info" />
 </navigation>
