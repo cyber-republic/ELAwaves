@@ -11,6 +11,9 @@ import org.elastos.carrier.exceptions.CarrierException;
 import java.util.HashMap;
 import java.util.List;
 
+import cse.uta.elawaves.Messages.Message;
+import cse.uta.elawaves.Messages.MessageManager;
+
 public class CarrierImplementation {
 
     public static final int ON_IDLE = 0;

@@ -6,7 +6,11 @@ import org.elastos.carrier.FriendInfo;
 import org.elastos.carrier.PresenceStatus;
 import org.elastos.carrier.UserInfo;
 
+import java.sql.Timestamp;
 import java.util.List;
+
+import cse.uta.elawaves.Messages.Message;
+import cse.uta.elawaves.Messages.MessageManager;
 
 class CarrierHandler implements org.elastos.carrier.CarrierHandler {
 
@@ -126,7 +130,12 @@ class CarrierHandler implements org.elastos.carrier.CarrierHandler {
             carrierMessage.friendID = friendID;
             carrierMessage.bytes = bytes;
 
-       CarrierImplementation.handleMessage(carrierMessage);
+
+        // Store message for later use
+        MessageManager messageManager = MessageManager.getInstance();
+            messageManager.addMessage(friendID,new Message(new String(bytes),true,friendID,new Timestamp(System.currentTimeMillis())));
+
+        CarrierImplementation.handleMessage(carrierMessage);
     }
 
     @Override
