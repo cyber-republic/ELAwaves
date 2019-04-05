@@ -70,7 +70,7 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
         callback.onFriendSelected(friend);
 
         Bundle bundle = new Bundle();
-            bundle.putString("address",friend.getUserId());
+        bundle.putString("address",friend.getUserId());
 
         Navigation.findNavController(view).navigate(R.id.action_friendsFragment_to_MessagingFragment,bundle);
     }
