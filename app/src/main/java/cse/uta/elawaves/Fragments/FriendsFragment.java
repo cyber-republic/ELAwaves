@@ -66,7 +66,13 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        callback.onFriendSelected((FriendInfo) parent.getAdapter().getItem(position));
+        FriendInfo friend = (FriendInfo) parent.getAdapter().getItem(position);
+        callback.onFriendSelected(friend);
+
+        Bundle bundle = new Bundle();
+            bundle.putString("address",friend.getUserId());
+
+        Navigation.findNavController(view).navigate(R.id.action_friendsFragment_to_MessagingFragment,bundle);
     }
 
 
