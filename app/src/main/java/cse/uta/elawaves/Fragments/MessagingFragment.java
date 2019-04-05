@@ -1,5 +1,7 @@
 package cse.uta.elawaves.Fragments;
 
+import org.elastos.carrier.exceptions.CarrierException;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.support.v4.app.ListFragment;
 import android.widget.EditText;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
 import java.util.Observable;
@@ -27,6 +30,7 @@ import static java.security.AccessController.getContext;
 public class MessagingFragment extends ListFragment implements Observer {
 
     private List<Message> messages;
+    private String address = "";// get address of recipient
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -44,6 +48,8 @@ public class MessagingFragment extends ListFragment implements Observer {
         MessageAdapter MessageArrayAdapter = new MessageAdapter(getActivity(), android.R.layout.simple_list_item_1, messages);
 
         setListAdapter(MessageArrayAdapter);
+
+        messages.addAll(MessageManager.getInstance().getMessages(address));
 
         return view;
     }
@@ -63,18 +69,25 @@ public class MessagingFragment extends ListFragment implements Observer {
         EditText messageText = view.findViewById(R.id.textInput);
         String message = messageText.getText().toString();
 
-        // actually send message later
-        // just append to messages list now
-        String address = "";// get address of recipient
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Message m = new Message(message, false, address, time);
-        messages.add(m);
 
-//        try {
-//            Carrier.getInstance().sendFriendMessage(address, message);
-//        } catch (CarrierException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            MessageManager.getInstance().sendMessage(m);
+        } catch (CarrierException e) {
+            // notify user that message failed to send
+            e.printStackTrace();
+        }
+
+        messageText.setText("");
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Message message = (Message) arg;
+//        MessageManager manager = (MessageManager) o;
+
+        messages.add(message);
 
         // store message in database here
 
@@ -83,15 +96,7 @@ public class MessagingFragment extends ListFragment implements Observer {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String message_query = "INSERT INTO messages (message, address, sent_received, message_timestamp)" +
                 "VALUES " +
-                "(" + message + ", " + address + ", 0, " + time + ");";
+                "(" + message.getMessage() + ", " + message.getAddress() + ", " + message.isReceived() + ", " + message.getMessageTimeStamp() + ");";
         db.execSQL(message_query);
-
-        messageText.setText("");
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        Message message = (Message) arg;
-        MessageManager manager = (MessageManager) o;
     }
 }
