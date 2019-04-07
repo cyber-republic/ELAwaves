@@ -22,6 +22,7 @@ import org.elastos.carrier.Carrier;
 import org.elastos.carrier.exceptions.CarrierException;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -33,6 +34,7 @@ import cse.uta.elawaves.R;
 public class MessagingFragment extends Fragment implements Observer, View.OnClickListener {
 
     private MessageAdapter adapter;
+    private List<Message> messages;
     private String address;
 
     @Override
@@ -50,12 +52,10 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
         MessageManager.getInstance().addObserver(this);
 
-        adapter = new MessageAdapter(getActivity(), android.R.layout.simple_list_item_1,MessageManager.getInstance().getMessages(address));
-        messageListView.setAdapter(adapter);
+        messages = MessageManager.getInstance().getMessages(address);
 
-        // fill name at the top of page
-        final TextView textViewToChange = view.findViewById(R.id.recipientText);
-        textViewToChange.setText(Carrier.getUserIdByAddress(address));
+        adapter = new MessageAdapter(getContext(), messages);
+            messageListView.setAdapter(adapter);
 
         Button sendMessageButton = view.findViewById(R.id.sendMessageButton);
             sendMessageButton.setOnClickListener(this);
@@ -74,14 +74,12 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
     public void sendMessage(View view, String message)
     {
-
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Message m = new Message(message, false, address, time);
 
         try {
             MessageManager.getInstance().sendMessage(m);
         } catch (CarrierException e) {
-            messagePopup(view);
             e.printStackTrace();
         }
     }
@@ -89,8 +87,7 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
     @Override
     public void update(Observable o, Object arg) {
         Message message = (Message) arg;
-
-        adapter.add(message);
+        messages.add(message);
         adapter.notifyDataSetChanged();
  }
 
@@ -112,6 +109,7 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
     @Override
     public void onClick(View v) {
+
         EditText messageText = ((View) v.getParent()).findViewById(R.id.textInput);
         if(!messageText.getText().toString().equals("")) {
             this.sendMessage(v, messageText.getText().toString());
