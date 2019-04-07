@@ -2,17 +2,11 @@ package cse.uta.elawaves.Carrier;
 
 
 import android.content.Context;
-import android.util.SparseArray;
 
 import org.elastos.carrier.Carrier;
-import org.elastos.carrier.FriendInfo;
 import org.elastos.carrier.exceptions.CarrierException;
 
 import java.util.HashMap;
-import java.util.List;
-
-import cse.uta.elawaves.Messages.Message;
-import cse.uta.elawaves.Messages.MessageManager;
 
 public class CarrierImplementation {
 

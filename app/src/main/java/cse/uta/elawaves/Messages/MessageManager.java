@@ -14,8 +14,6 @@ import java.util.Observable;
 import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.Database.DatabaseHandler;
 
-import static java.security.AccessController.getContext;
-
 public class MessageManager extends Observable {
 
     private static MessageManager instance;

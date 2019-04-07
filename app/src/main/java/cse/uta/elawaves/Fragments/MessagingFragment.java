@@ -1,29 +1,23 @@
 package cse.uta.elawaves.Fragments;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.ListFragment;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import org.elastos.carrier.Carrier;
 import org.elastos.carrier.exceptions.CarrierException;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup.LayoutParams;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.app.ListFragment;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.ImageButton;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.Timestamp;
 import java.util.Observable;
 import java.util.Observer;

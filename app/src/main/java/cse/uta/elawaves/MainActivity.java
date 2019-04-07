@@ -2,8 +2,8 @@ package cse.uta.elawaves;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.elastos.spvcore.ElastosWalletUtils;
 import com.elastos.spvcore.WalletException;
@@ -13,11 +13,8 @@ import org.elastos.carrier.exceptions.CarrierException;
 import cse.uta.elawaves.Carrier.CarrierCallback;
 import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.Carrier.CarrierMessage;
-import cse.uta.elawaves.Database.DatabaseHandler;
 import cse.uta.elawaves.Messages.MessageManager;
 import cse.uta.elawaves.Wallet.WalletImplementation;
-
-import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity{
 

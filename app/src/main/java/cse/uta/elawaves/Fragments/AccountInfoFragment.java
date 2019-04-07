@@ -1,13 +1,10 @@
 package cse.uta.elawaves.Fragments;
-import android.content.Context;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +15,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import org.elastos.carrier.Carrier;
-import org.elastos.carrier.UserInfo;
+
 import org.elastos.carrier.exceptions.CarrierException;
 
 import cse.uta.elawaves.Carrier.CarrierImplementation;
