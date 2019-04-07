@@ -20,7 +20,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import org.elastos.carrier.Carrier;
 import org.elastos.carrier.UserInfo;
+import org.elastos.carrier.exceptions.CarrierException;
 
+import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.R;
 public class AccountInfoFragment extends Fragment {
 
@@ -43,10 +45,12 @@ public class AccountInfoFragment extends Fragment {
         ImageView qrCodePic = view.findViewById(R.id.userQRCode);
         imageView.setImageBitmap(decodeSampleBitmapFromResource(getResources(),R.drawable.profilepictest,100,100));
         try{
-            Bitmap bmp = encodeAsBitmap("Brandon Tran");
+            Bitmap bmp = encodeAsBitmap(CarrierImplementation.getCarrier().getAddress());
             qrCodePic.setImageBitmap(bmp);
         }
         catch(WriterException e){
+            e.printStackTrace();
+        } catch (CarrierException e) {
             e.printStackTrace();
         }
 
