@@ -45,6 +45,7 @@ public class MessagingFragment extends ListFragment implements Observer {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        MessageManager.setup(getContext());
         address = savedInstanceState.getString("address");
     }
 
@@ -60,7 +61,7 @@ public class MessagingFragment extends ListFragment implements Observer {
 
         setListAdapter(MessageArrayAdapter);
 
-        messages.addAll(MessageManager.getInstance().getMessages(address));
+        MessageArrayAdapter.addAll(MessageManager.getInstance().getMessages(address));
 
         // fill name at the top of page
         final TextView textViewToChange = (TextView) view.findViewById(R.id.recipientName);
@@ -117,12 +118,10 @@ public class MessagingFragment extends ListFragment implements Observer {
 
     private void messagePopup(View view) {
         RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.messaging_popup_layout);
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.messaging_popup_layout,null);
         final PopupWindow popupWindow = new PopupWindow(customView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        if(Build.VERSION.SDK_INT>=21){
-            popupWindow.setElevation(5.0f);
-        }
+        popupWindow.setElevation(5.0f);
         ImageButton messagingPopupCloseButton = (ImageButton) customView.findViewById(R.id.messaging_popup_close_button);
         messagingPopupCloseButton.setOnClickListener(new View.OnClickListener() {
             @Override

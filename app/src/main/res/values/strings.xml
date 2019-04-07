@@ -9,4 +9,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="button_add_friend">Add Friend</string>
     <string name="recipientName">Name</string>
+    <string name="sendMessage">Message</string>
 </resources>

@@ -20,18 +20,21 @@ public class MessageManager extends Observable {
 
     private static MessageManager instance;
     private static HashMap<String,ArrayList<Message>> messages = new HashMap<>();
-    DatabaseHandler dbHelper;
+    private static DatabaseHandler dbHelper;
 
     public static MessageManager getInstance(){
+            return instance;
+    }
+
+    public static MessageManager setup(Context context){
         if(instance != null)
             return instance;
 
-        return new MessageManager();
+        instance = new MessageManager(context);
+
+        return instance;
     }
 
-    private MessageManager() {
-
-    }
     private MessageManager(Context context){
         dbHelper = new DatabaseHandler(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
