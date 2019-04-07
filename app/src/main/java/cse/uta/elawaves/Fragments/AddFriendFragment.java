@@ -36,6 +36,7 @@ public class AddFriendFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_add_friend,container,false);
 
         IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
+            intentIntegrator.setBeepEnabled(false); 
             intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
             intentIntegrator.setPrompt("Scan Friends Address");
             intentIntegrator.setOrientationLocked(true);
