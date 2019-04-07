@@ -12,8 +12,10 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import org.elastos.carrier.FriendInfo;
+import org.elastos.carrier.exceptions.CarrierException;
 
 import androidx.navigation.Navigation;
+import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.R;
 
 public class AddFriendFragment extends Fragment{
@@ -46,7 +48,11 @@ public class AddFriendFragment extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(result != null){
-            // Implement Friend adding logic here;
+            try {
+                CarrierImplementation.getCarrier().addFriend(result.getContents(),"");
+            } catch (CarrierException e) {
+                e.printStackTrace();
+            }
         }
         Navigation.findNavController(getView()).navigate(R.id.action_addFriendFragment_to_friendsFragment);
     }

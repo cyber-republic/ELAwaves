@@ -5,6 +5,7 @@ import org.elastos.carrier.ConnectionStatus;
 import org.elastos.carrier.FriendInfo;
 import org.elastos.carrier.PresenceStatus;
 import org.elastos.carrier.UserInfo;
+import org.elastos.carrier.exceptions.CarrierException;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -102,7 +103,12 @@ class CarrierHandler implements org.elastos.carrier.CarrierHandler {
             carrierMessage.userInfo = userInfo;
             carrierMessage.message = message;
 
-       CarrierImplementation.handleMessage(carrierMessage);
+        try {
+            CarrierImplementation.getCarrier().acceptFriend(friendID);
+        } catch (CarrierException e) {
+            e.printStackTrace();
+        }
+        CarrierImplementation.handleMessage(carrierMessage);
     }
 
     @Override
