@@ -3,11 +3,13 @@ package cse.uta.elawaves.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.text.Editable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -27,7 +29,7 @@ import cse.uta.elawaves.Messages.Message;
 import cse.uta.elawaves.Messages.MessageManager;
 import cse.uta.elawaves.R;
 
-public class MessagingFragment extends ListFragment implements Observer {
+public class MessagingFragment extends ListFragment implements Observer, View.OnClickListener {
 
     private MessageAdapter adapter;
     private String address;
@@ -55,6 +57,8 @@ public class MessagingFragment extends ListFragment implements Observer {
         final TextView textViewToChange = view.findViewById(R.id.recipientText);
         textViewToChange.setText(Carrier.getUserIdByAddress(address));
 
+        Button sendMessageButton = view.findViewById(R.id.sendMessageButton);
+            sendMessageButton.setOnClickListener(this);
         return view;
     }
 
@@ -68,10 +72,8 @@ public class MessagingFragment extends ListFragment implements Observer {
         super.onDetach();
     }
 
-    public void sendMessage(View view)
+    public void sendMessage(View view, String message)
     {
-        EditText messageText = view.findViewById(R.id.textInput);
-        String message = messageText.getText().toString();
 
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Message m = new Message(message, false, address, time);
@@ -82,8 +84,6 @@ public class MessagingFragment extends ListFragment implements Observer {
             messagePopup(view);
             e.printStackTrace();
         }
-
-        messageText.setText("");
     }
 
     @Override
@@ -108,5 +108,14 @@ public class MessagingFragment extends ListFragment implements Observer {
             }
         });
         popupWindow.showAtLocation(rl, Gravity.CENTER,0,0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        EditText messageText = v.findViewById(R.id.textInput);
+        if(!messageText.getText().equals("")) {
+            this.sendMessage(v, messageText.getText().toString());
+            messageText.setText("");
+        }
     }
 }

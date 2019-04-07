@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.elastos.spvcore.ElastosWalletUtils;
 import com.elastos.spvcore.WalletException;
 
+import org.elastos.carrier.Carrier;
+import org.elastos.carrier.UserInfo;
 import org.elastos.carrier.exceptions.CarrierException;
 
 import cse.uta.elawaves.Carrier.CarrierCallback;

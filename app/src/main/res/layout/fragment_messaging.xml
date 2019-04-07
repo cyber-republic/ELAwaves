@@ -59,6 +59,7 @@
                 android:inputType="textMultiLine" />
 
             <Button
+                android:id="@+id/sendMessageButton"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="128dp"
                 android:layout_height="match_parent"
