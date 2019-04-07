@@ -2,6 +2,7 @@ package cse.uta.elawaves.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.view.Gravity;
@@ -29,7 +30,7 @@ import cse.uta.elawaves.Messages.Message;
 import cse.uta.elawaves.Messages.MessageManager;
 import cse.uta.elawaves.R;
 
-public class MessagingFragment extends ListFragment implements Observer, View.OnClickListener {
+public class MessagingFragment extends Fragment implements Observer, View.OnClickListener {
 
     private MessageAdapter adapter;
     private String address;
@@ -37,14 +38,13 @@ public class MessagingFragment extends ListFragment implements Observer, View.On
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        address = savedInstanceState.getString("address");
+        address = getArguments().getString("address");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_messaging,container,false);
-
-        String address = savedInstanceState.getString("address");
+        String address = getArguments().getString("address");
 
         ListView messageListView =  view.findViewById(R.id.messagesList);
 
@@ -112,8 +112,8 @@ public class MessagingFragment extends ListFragment implements Observer, View.On
 
     @Override
     public void onClick(View v) {
-        EditText messageText = v.findViewById(R.id.textInput);
-        if(!messageText.getText().equals("")) {
+        EditText messageText = ((View) v.getParent()).findViewById(R.id.textInput);
+        if(!messageText.getText().toString().equals("")) {
             this.sendMessage(v, messageText.getText().toString());
             messageText.setText("");
         }

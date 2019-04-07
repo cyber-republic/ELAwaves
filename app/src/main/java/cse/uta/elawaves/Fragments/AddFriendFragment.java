@@ -36,7 +36,7 @@ public class AddFriendFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_add_friend,container,false);
 
         IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
-            intentIntegrator.setBeepEnabled(false); 
+            intentIntegrator.setBeepEnabled(false);
             intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
             intentIntegrator.setPrompt("Scan Friends Address");
             intentIntegrator.setOrientationLocked(true);
@@ -50,7 +50,8 @@ public class AddFriendFragment extends Fragment{
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(result != null){
             try {
-                CarrierImplementation.getCarrier().addFriend(result.getContents(),"");
+                System.out.println("QR: " + result.getContents());
+                CarrierImplementation.getCarrier().addFriend(result.getContents(),"Hello!");
             } catch (CarrierException e) {
                 e.printStackTrace();
             }

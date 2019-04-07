@@ -60,6 +60,14 @@ public class MessageManager extends Observable {
 
 
     public ArrayList<Message> getMessages(String address){
+        ArrayList<Message> m = messages.get(address);
+
+        if(m == null){
+            ArrayList<Message> newMessages = new ArrayList<Message>();
+            messages.put(address,newMessages);
+            return newMessages;
+        }
+
         return messages.get(address);
     }
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,10 +30,13 @@ public class MessageAdapter extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
         View messageItem = convertView;
         if(messageItem == null)
-            messageItem = LayoutInflater.from(context).inflate(R.layout.friend_info_list_item,parent,false);
+            messageItem = LayoutInflater.from(context).inflate(R.layout.message_list_item,parent,false);
 
         Message message = messages.get(position);
 
+        TextView messageView = messageItem.findViewById(R.id.messageTextView);
+            messageView.setText(message.getMessage());
+            
         return messageItem;
     }
 }
