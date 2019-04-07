@@ -45,7 +45,7 @@ public class MessageManager extends Observable {
                 // Passing values
                 String message = c.getString(0);
                 String address = c.getString(1);
-                String sent_recieved = c.getString(2);
+                Boolean sent_recieved = Boolean.valueOf(c.getString(2));
                 Timestamp message_timestamp = Timestamp.valueOf(c.getString(3));
 
                 // Do something Here with values
