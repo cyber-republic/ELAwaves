@@ -14,29 +14,24 @@ import java.util.List;
 import cse.uta.elawaves.Messages.Message;
 import cse.uta.elawaves.R;
 
-public class MessageAdapter extends ArrayAdapter {
+public class MessageAdapter extends ArrayAdapter<Message> {
 
-    private Context context;
-    private List<Message> messages;
-
-    public MessageAdapter(@NonNull Context context, int resource, List<Message> messages) {
-        super(context, resource, messages);
-        this.context = context;
-        this.messages = messages;
+    public MessageAdapter(@NonNull Context context, List<Message> messages) {
+        super(context, 0, messages);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
-        View messageItem = convertView;
-        if(messageItem == null)
-            messageItem = LayoutInflater.from(context).inflate(R.layout.message_list_item,parent,false);
 
-        Message message = messages.get(position);
+        Message message = getItem(position);
 
-        TextView messageView = messageItem.findViewById(R.id.messageTextView);
+        if(convertView == null)
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.message_list_item,parent,false);
+
+        TextView messageView = convertView.findViewById(R.id.messageTextView);
             messageView.setText(message.getMessage());
-            
-        return messageItem;
+
+        return convertView;
     }
 }

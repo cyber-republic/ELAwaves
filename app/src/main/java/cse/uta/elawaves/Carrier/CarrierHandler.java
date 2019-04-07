@@ -136,10 +136,10 @@ class CarrierHandler implements org.elastos.carrier.CarrierHandler {
             carrierMessage.friendID = friendID;
             carrierMessage.bytes = bytes;
 
-
         // Store message for later use
+        Message message = new Message(new String(bytes),true,friendID,new Timestamp(System.currentTimeMillis()));
         MessageManager messageManager = MessageManager.getInstance();
-            messageManager.addMessage(new Message(new String(bytes),true,friendID,new Timestamp(System.currentTimeMillis())));
+            messageManager.addMessage(message);
 
         CarrierImplementation.handleMessage(carrierMessage);
     }
