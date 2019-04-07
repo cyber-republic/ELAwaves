@@ -16,15 +16,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create_query = "CREATE TABLE messages( " +
-                "message_id INTEGER NOT NULL AUTO_INCREMENT, " +
+        String create_query = "CREATE TABLE IF NOT EXISTS messages( " +
+                "message_id INT PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 "message VARCHAR(255) NOT NULL, " +
                 "address CHAR(52) NOT NULL, " +
                 "sent_received BIT(1), " +
-                "prev_message INTEGER NOT NULL, " +
-                "message_order INTEGER DEFAULT 0, " +
+                "prev_message INT NOT NULL, " +
+                "message_order INT DEFAULT 0, " +
                 "message_timestamp DATETIME NOT NULL, " +
-                "PRIMARY KEY(message_id), " +
                 "FOREIGN KEY(prev_message) REFERENCES messages(message_id));";
         db.execSQL(create_query);
     }

@@ -14,6 +14,7 @@ import cse.uta.elawaves.Carrier.CarrierCallback;
 import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.Carrier.CarrierMessage;
 import cse.uta.elawaves.Database.DatabaseHandler;
+import cse.uta.elawaves.Messages.MessageManager;
 import cse.uta.elawaves.Wallet.WalletImplementation;
 
 import static java.security.AccessController.getContext;
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+
+
+        MessageManager.setup(this);
 
         // Startup Wallet
         String rootPath = getApplicationContext().getFilesDir().getParent();

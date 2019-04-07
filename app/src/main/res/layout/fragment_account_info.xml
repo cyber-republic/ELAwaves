@@ -17,7 +17,6 @@
         tools:src="@drawable/profilepictest" />
 
     <TextView
-        android:id="@+id/userName"
         android:layout_width="202dp"
         android:layout_height="58dp"
         android:layout_marginStart="8dp"
@@ -45,7 +44,6 @@
         />
 
     <TextView
-        android:id="@+id/textView3"
         android:layout_width="204dp"
         android:layout_height="36dp"
         android:layout_marginStart="60dp"

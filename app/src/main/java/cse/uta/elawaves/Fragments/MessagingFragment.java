@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.ListFragment;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
@@ -28,24 +29,18 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cse.uta.elawaves.Adapter.MessageAdapter;
-import cse.uta.elawaves.Database.DatabaseHandler;
-import cse.uta.elawaves.MainActivity;
 import cse.uta.elawaves.Messages.Message;
 import cse.uta.elawaves.Messages.MessageManager;
 import cse.uta.elawaves.R;
 
-import static java.security.AccessController.getContext;
-
 public class MessagingFragment extends ListFragment implements Observer {
 
-    private List<Message> messages;
+    private MessageAdapter adapter;
     private String address;
-    private String recipientName;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        MessageManager.setup(getContext());
         address = savedInstanceState.getString("address");
     }
 
@@ -53,18 +48,17 @@ public class MessagingFragment extends ListFragment implements Observer {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_messaging,container,false);
 
-        messages =  view.findViewById(R.id.messagesList);
+        String address = savedInstanceState.getString("address");
+
+        ListView messageListView =  view.findViewById(R.id.messagesList);
 
         MessageManager.getInstance().addObserver(this);
 
-        MessageAdapter MessageArrayAdapter = new MessageAdapter(getActivity(), android.R.layout.simple_list_item_1, messages);
-
-        setListAdapter(MessageArrayAdapter);
-
-        MessageArrayAdapter.addAll(MessageManager.getInstance().getMessages(address));
+        adapter = new MessageAdapter(getActivity(), android.R.layout.simple_list_item_1,MessageManager.getInstance().getMessages(address));
+        messageListView.setAdapter(adapter);
 
         // fill name at the top of page
-        final TextView textViewToChange = (TextView) view.findViewById(R.id.recipientName);
+        final TextView textViewToChange = view.findViewById(R.id.recipientText);
         textViewToChange.setText(Carrier.getUserIdByAddress(address));
 
         return view;
@@ -101,28 +95,18 @@ public class MessagingFragment extends ListFragment implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Message message = (Message) arg;
-//        MessageManager manager = (MessageManager) o;
 
-        messages.add(message);
-
-        // store message in database here
-
-        // Startup Database
-        DatabaseHandler dbHelper = new DatabaseHandler(getContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String message_query = "INSERT INTO messages (message, address, sent_received, message_timestamp)" +
-                "VALUES " +
-                "(" + message.getMessage() + ", " + message.getAddress() + ", " + message.isReceived() + ", " + message.getMessageTimeStamp() + ");";
-        db.execSQL(message_query);
-    }
+        adapter.add(message);
+        adapter.notifyDataSetChanged();
+ }
 
     private void messagePopup(View view) {
-        RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.messaging_popup_layout);
+        RelativeLayout rl = view.findViewById(R.id.messaging_popup_layout);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.messaging_popup_layout,null);
         final PopupWindow popupWindow = new PopupWindow(customView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         popupWindow.setElevation(5.0f);
-        ImageButton messagingPopupCloseButton = (ImageButton) customView.findViewById(R.id.messaging_popup_close_button);
+        ImageButton messagingPopupCloseButton = customView.findViewById(R.id.messaging_popup_close_button);
         messagingPopupCloseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -6,18 +6,20 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/recipientLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="48dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/messagesList"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/recipientName"
+            android:id="@+id/recipientText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/recipientName" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <ListView
@@ -29,8 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/recipientLinearLayout" />
 
     <ScrollView
         android:id="@+id/textArea"
@@ -59,7 +60,6 @@
                 android:inputType="textMultiLine" />
 
             <Button
-                android:id="@+id/sendButton"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="128dp"
                 android:layout_height="match_parent"
