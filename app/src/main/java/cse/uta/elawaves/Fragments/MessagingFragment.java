@@ -3,8 +3,6 @@ package cse.uta.elawaves.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.text.Editable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +14,18 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import org.elastos.carrier.Carrier;
 import org.elastos.carrier.exceptions.CarrierException;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import cse.uta.elawaves.Adapter.MessageAdapter;
-import cse.uta.elawaves.Messages.Message;
-import cse.uta.elawaves.Messages.MessageManager;
+import cse.uta.elawaves.Carrier.Messages.Message;
+import cse.uta.elawaves.Carrier.Messages.MessageManager;
 import cse.uta.elawaves.R;
 
 public class MessagingFragment extends Fragment implements Observer, View.OnClickListener {
@@ -52,7 +49,7 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
         MessageManager.getInstance().addObserver(this);
 
-        messages = MessageManager.getInstance().getMessages(address);
+        messages = new ArrayList<>(MessageManager.getInstance().getMessages(address));
 
         adapter = new MessageAdapter(getContext(), messages);
             messageListView.setAdapter(adapter);
@@ -84,13 +81,6 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        Message message = (Message) arg;
-        messages.add(message);
-        adapter.notifyDataSetChanged();
- }
-
     private void messagePopup(View view) {
         RelativeLayout rl = view.findViewById(R.id.messaging_popup_layout);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -115,5 +105,11 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
             this.sendMessage(v, messageText.getText().toString());
             messageText.setText("");
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        messages = new ArrayList<>(MessageManager.getInstance().getMessages(address));
+        adapter.notifyDataSetChanged();
     }
 }

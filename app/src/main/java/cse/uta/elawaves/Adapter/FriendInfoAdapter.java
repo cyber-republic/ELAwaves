@@ -20,8 +20,8 @@ public class FriendInfoAdapter extends ArrayAdapter {
     private Context context;
     private List<FriendInfo> friends;
 
-    public FriendInfoAdapter(@NonNull Context context, int resource, List<FriendInfo> friends) {
-        super(context, resource, friends);
+    public FriendInfoAdapter(@NonNull Context context, List<FriendInfo> friends) {
+        super(context, 0, friends);
         this.context = context;
         this.friends = friends;
     }

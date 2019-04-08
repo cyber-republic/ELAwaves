@@ -9,13 +9,9 @@ import com.elastos.spvcore.ElastosWalletUtils;
 import com.elastos.spvcore.WalletException;
 
 import org.elastos.carrier.Carrier;
-import org.elastos.carrier.UserInfo;
 import org.elastos.carrier.exceptions.CarrierException;
 
-import cse.uta.elawaves.Carrier.CarrierCallback;
 import cse.uta.elawaves.Carrier.CarrierImplementation;
-import cse.uta.elawaves.Carrier.CarrierMessage;
-import cse.uta.elawaves.Messages.MessageManager;
 import cse.uta.elawaves.Wallet.WalletImplementation;
 
 public class MainActivity extends AppCompatActivity{
@@ -34,27 +30,6 @@ public class MainActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        if (CarrierImplementation.isReady()){
-            Intent i = new Intent(getApplicationContext(),HomeActivity.class);
-            startActivity(i);
-            finish();
-        }
-
-        CarrierImplementation.setCallback(new CarrierCallback() {
-            @Override
-            public void handleMessage(CarrierMessage message) {
-                if(message.type == CarrierImplementation.ON_READY){
-                    System.out.println("Carrier is ready");
-                    Intent i = new Intent(getApplicationContext(),HomeActivity.class);
-                    startActivity(i);
-                    finish();
-                }
-            }
-        });
-
-
-        MessageManager.setup(this);
-
         // Startup Wallet
         String rootPath = getApplicationContext().getFilesDir().getParent();
         try{
@@ -63,12 +38,24 @@ public class MainActivity extends AppCompatActivity{
         }catch (WalletException e){
             e.printStackTrace();
         }
+
+        if (CarrierImplementation.isReady()){
+            Intent i = new Intent(getApplicationContext(),HomeActivity.class);
+            startActivity(i);
+            finish();
+        }
+
+        CarrierImplementation.onReady(this);
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
+    }
 
-        CarrierImplementation.clearCallback();
+    public void carrierReady(){
+        Intent i = new Intent(getApplicationContext(),HomeActivity.class);
+        startActivity(i);
+        finish();
     }
 }

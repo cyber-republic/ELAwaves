@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cse.uta.elawaves.Messages.Message;
+import cse.uta.elawaves.Carrier.Messages.Message;
 import cse.uta.elawaves.R;
 
 public class MessageAdapter extends ArrayAdapter<Message> {
