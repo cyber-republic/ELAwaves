@@ -223,5 +223,5 @@ public class AccountInfoFragment extends Fragment{
     public void onDetach(){
         super.onDetach();
     }
-    
+
 }
