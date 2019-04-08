@@ -1,4 +1,4 @@
-package cse.uta.elawaves.Messages;
+package cse.uta.elawaves.Carrier.Messages;
 
 
 import java.sql.Timestamp;

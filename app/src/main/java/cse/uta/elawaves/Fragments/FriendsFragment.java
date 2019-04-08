@@ -14,15 +14,27 @@ import org.elastos.carrier.FriendInfo;
 import org.elastos.carrier.exceptions.CarrierException;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import androidx.navigation.Navigation;
 import cse.uta.elawaves.Adapter.FriendInfoAdapter;
 import cse.uta.elawaves.Carrier.CarrierImplementation;
+import cse.uta.elawaves.Carrier.Friends.FriendManager;
 import cse.uta.elawaves.R;
 
-public class FriendsFragment extends ListFragment implements OnItemClickListener {
+public class FriendsFragment extends ListFragment implements OnItemClickListener, Observer {
 
     OnFriendSelectedListener callback;
+    List<FriendInfo> friends;
+    FriendInfoAdapter adapter;
+    private FriendManager manager;
+
+    @Override
+    public void update(Observable observable, Object o) {
+        friends = FriendManager.getInstance().getFriends();
+        adapter.notifyDataSetChanged();
+    }
 
     public interface OnFriendSelectedListener{
         void onFriendSelected(FriendInfo info);
@@ -32,16 +44,14 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
-        List<FriendInfo> friends = null;
-        try {
-            friends = CarrierImplementation.getCarrier().getFriends();
-        } catch (CarrierException e) {
-            e.printStackTrace();
-        }
+        manager = FriendManager.getInstance();
+            manager.addObserver(this);
 
-        FriendInfoAdapter friendInfoArrayAdapter = new FriendInfoAdapter(getActivity(), android.R.layout.simple_list_item_1, friends);
+        friends = manager.getFriends();
 
-        setListAdapter(friendInfoArrayAdapter);
+        adapter = new FriendInfoAdapter(getActivity(), friends);
+
+        setListAdapter(adapter);
 
         getListView().setOnItemClickListener(this);
     }
@@ -64,6 +74,10 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         FriendInfo friend = (FriendInfo) parent.getAdapter().getItem(position);
+
+        if(!FriendManager.getInstance().isFriendConnected(friend.getUserId()))
+            return;
+
         callback.onFriendSelected(friend);
 
         Bundle bundle = new Bundle();

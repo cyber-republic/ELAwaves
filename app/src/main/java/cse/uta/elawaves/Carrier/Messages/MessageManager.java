@@ -1,4 +1,4 @@
-package cse.uta.elawaves.Messages;
+package cse.uta.elawaves.Carrier.Messages;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -34,7 +34,7 @@ public class MessageManager extends Observable {
     }
 
     private MessageManager(Context context){
-        dbHelper = new DatabaseHandler(context);
+        /*dbHelper = new DatabaseHandler(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String conversation_query = "SELECT message, address, sent_received, message_timestamp" +
@@ -54,16 +54,15 @@ public class MessageManager extends Observable {
             } while(c.moveToNext());
         }
         c.close();
-        db.close();
+        db.close();*/
 
     }
-
 
     public ArrayList<Message> getMessages(String address){
         ArrayList<Message> m = messages.get(address);
 
         if(m == null){
-            ArrayList<Message> newMessages = new ArrayList<Message>();
+            ArrayList<Message> newMessages = new ArrayList<>();
             messages.put(address,newMessages);
             return newMessages;
         }
@@ -72,14 +71,12 @@ public class MessageManager extends Observable {
     }
 
     public void addMessage(Message message){
-        System.out.println(message);
-        setChanged();
         messages.get(message.getAddress()).add(message);
-
+/*
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String message_query = "INSERT INTO messages (message, address, sent_received, message_timestamp) VALUES (?,?,?,?)";
         db.execSQL(message_query,new String[] {message.getMessage(),message.getAddress(), String.valueOf(message.isReceived() ? 1 : 0),message.getMessageTimeStamp().toString()});
-        System.out.println("UPDATE");
+*/
         notifyObservers(message);
     }
 
