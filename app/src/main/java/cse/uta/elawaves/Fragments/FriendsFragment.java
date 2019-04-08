@@ -30,7 +30,7 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
 
     @Override
     public void update(Observable observable, final Object o) {
-        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 adapter.clear();
@@ -85,7 +85,7 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
         callback.onFriendSelected(friend);
 
         Bundle bundle = new Bundle();
-        bundle.putString("address",friend.getUserId());
+            bundle.putString("address",friend.getUserId());
 
         Navigation.findNavController(view).navigate(R.id.action_friendsFragment_to_MessagingFragment,bundle);
     }
@@ -104,6 +104,7 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
     @Override
     public void onDetach(){
         callback = null;
+        FriendManager.getInstance().deleteObserver(this);
         super.onDetach();
     }
 }

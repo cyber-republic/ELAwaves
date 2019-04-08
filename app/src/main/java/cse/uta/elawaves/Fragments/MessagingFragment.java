@@ -25,6 +25,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cse.uta.elawaves.Adapter.MessageAdapter;
+import cse.uta.elawaves.Carrier.Friends.FriendManager;
 import cse.uta.elawaves.Carrier.Messages.Message;
 import cse.uta.elawaves.Carrier.Messages.MessageManager;
 import cse.uta.elawaves.R;
@@ -37,18 +38,19 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        address = getArguments().getString("address");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_messaging,container,false);
 
+        address = getArguments().getString("address");
+
         ListView messageListView =  view.findViewById(R.id.messagesList);
 
         MessageManager.getInstance().addObserver(this);
 
-        adapter = new MessageAdapter(Objects.requireNonNull(getActivity()), MessageManager.getInstance().getMessages(address));
+        adapter = new MessageAdapter(Objects.requireNonNull(getActivity()), MessageManager.getInstance().getMessages(this.address));
             messageListView.setAdapter(adapter);
 
         Button sendMessageButton = view.findViewById(R.id.sendMessageButton);
@@ -64,6 +66,7 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
     @Override
     public void onDetach(){
         super.onDetach();
+        MessageManager.getInstance().deleteObserver(this);
     }
 
     public void sendMessage(View view, String message)
@@ -109,8 +112,6 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                adapter.clear();
-                adapter.addAll(MessageManager.getInstance().getMessages(address));
                 adapter.notifyDataSetChanged();
             }
         });
