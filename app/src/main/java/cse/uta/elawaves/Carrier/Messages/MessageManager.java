@@ -71,12 +71,14 @@ public class MessageManager extends Observable {
     }
 
     public void addMessage(Message message){
-        messages.get(message.getAddress()).add(message);
+
+        getMessages(message.getAddress()).add(message);
 /*
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String message_query = "INSERT INTO messages (message, address, sent_received, message_timestamp) VALUES (?,?,?,?)";
         db.execSQL(message_query,new String[] {message.getMessage(),message.getAddress(), String.valueOf(message.isReceived() ? 1 : 0),message.getMessageTimeStamp().toString()});
 */
+        setChanged();
         notifyObservers(message);
     }
 

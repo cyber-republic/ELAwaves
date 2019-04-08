@@ -20,6 +20,7 @@ import org.elastos.carrier.exceptions.CarrierException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -31,7 +32,6 @@ import cse.uta.elawaves.R;
 public class MessagingFragment extends Fragment implements Observer, View.OnClickListener {
 
     private MessageAdapter adapter;
-    private List<Message> messages;
     private String address;
 
     @Override
@@ -43,15 +43,12 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_messaging,container,false);
-        String address = getArguments().getString("address");
 
         ListView messageListView =  view.findViewById(R.id.messagesList);
 
         MessageManager.getInstance().addObserver(this);
 
-        messages = new ArrayList<>(MessageManager.getInstance().getMessages(address));
-
-        adapter = new MessageAdapter(getContext(), messages);
+        adapter = new MessageAdapter(Objects.requireNonNull(getActivity()), MessageManager.getInstance().getMessages(address));
             messageListView.setAdapter(adapter);
 
         Button sendMessageButton = view.findViewById(R.id.sendMessageButton);
@@ -109,7 +106,13 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
     @Override
     public void update(Observable observable, Object o) {
-        messages = new ArrayList<>(MessageManager.getInstance().getMessages(address));
-        adapter.notifyDataSetChanged();
+        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.clear();
+                adapter.addAll(MessageManager.getInstance().getMessages(address));
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }

@@ -11,6 +11,7 @@ import org.elastos.carrier.FriendInfo;
 import androidx.navigation.Navigation;
 import cse.uta.elawaves.Fragments.AddFriendFragment;
 import cse.uta.elawaves.Fragments.FriendsFragment;
+import cse.uta.elawaves.Carrier.Messages.MessageManager;
 
 public class HomeActivity extends AppCompatActivity implements FriendsFragment.OnFriendSelectedListener, AddFriendFragment.OnAddFriendFragmentListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -23,7 +24,7 @@ public class HomeActivity extends AppCompatActivity implements FriendsFragment.O
         BottomNavigationView menu = findViewById(R.id.home_navigation);
         menu.setOnNavigationItemSelectedListener(this);
 
-
+        MessageManager.setup(this);
     }
 
     @Override

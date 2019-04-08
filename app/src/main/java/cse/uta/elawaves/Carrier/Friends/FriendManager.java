@@ -43,12 +43,14 @@ public class FriendManager extends Observable {
     public void addFriend(FriendInfo friendInfo){
         System.out.println("FRIEND ADDED:" + friendInfo.getUserId());
         friends.put(friendInfo.getUserId(),friendInfo);
+        setChanged();
         notifyObservers();
     }
 
     public void removeFriend(String address){
         System.out.println("FRIEND REMOVED:" + address);
         friends.remove(address);
+        setChanged();
         notifyObservers();
     }
 
@@ -60,18 +62,22 @@ public class FriendManager extends Observable {
         FriendInfo info = friends.get(address);
         if(info != null) {
             info.setConnectionStatus(status);
+            setChanged();
             notifyObservers();
         }
     }
 
     public void changeFriendInfo(FriendInfo info){
         friends.put(info.getUserId(),info);
+        setChanged();
+        notifyObservers();
     }
 
     public void changeFriendPresence(String address, PresenceStatus status){
         FriendInfo info = friends.get(address);
         if(info != null) {
             info.setPresence(status);
+            setChanged();
             notifyObservers();
         }
     }

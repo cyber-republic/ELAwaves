@@ -15,12 +15,12 @@ import java.util.List;
 
 import cse.uta.elawaves.R;
 
-public class FriendInfoAdapter extends ArrayAdapter {
+public class FriendInfoAdapter<T extends FriendInfo> extends ArrayAdapter<T> {
 
     private Context context;
-    private List<FriendInfo> friends;
+    private List<T> friends;
 
-    public FriendInfoAdapter(@NonNull Context context, List<FriendInfo> friends) {
+    public FriendInfoAdapter(@NonNull Context context, List<T> friends) {
         super(context, 0, friends);
         this.context = context;
         this.friends = friends;
@@ -33,7 +33,7 @@ public class FriendInfoAdapter extends ArrayAdapter {
         if(friendItem == null)
             friendItem = LayoutInflater.from(context).inflate(R.layout.friend_info_list_item,parent,false);
 
-        FriendInfo friend = friends.get(position);
+        FriendInfo friend =  friends.get(position);
 
         TextView nick = friendItem.findViewById(R.id.friend_nick_textview);
             nick.setText(friend.getName());

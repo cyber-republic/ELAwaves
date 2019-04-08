@@ -56,7 +56,7 @@ public class AddFriendFragment extends Fragment{
                 e.printStackTrace();
             }
         }
-        Navigation.findNavController(getView()).navigate(R.id.action_addFriendFragment_to_friendsFragment);
+        Navigation.findNavController(getView()).popBackStack();
     }
 
     @Override
