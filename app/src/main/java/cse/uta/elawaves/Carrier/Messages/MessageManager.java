@@ -34,7 +34,15 @@ public class MessageManager extends Observable {
     }
 
     private MessageManager(Context context){
-        /*dbHelper = new DatabaseHandler(context);
+        dbHelper = new DatabaseHandler(context);
+
+    }
+
+    public ArrayList<Message> getMessages(String address){
+        ArrayList<Message> m = messages.get(address);
+        if (m != null)
+            return m;
+
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String conversation_query = "SELECT message, address, sent_received, message_timestamp" +
@@ -44,40 +52,28 @@ public class MessageManager extends Observable {
         if (c.moveToFirst()){
             do {
                 // Passing values
-                String message = c.getString(0);
-                String address = c.getString(1);
-                Boolean sent_recieved = Boolean.valueOf(c.getString(2));
-                Timestamp message_timestamp = Timestamp.valueOf(c.getString(3));
+                String tmp_message = c.getString(0);
+                String tmp_address = c.getString(1);
+                Boolean tmp_sent_recieved = Boolean.valueOf(c.getString(2));
+                Timestamp tmp_message_timestamp = Timestamp.valueOf(c.getString(3));
 
                 // Do something Here with values
+                Message tmp_msg = new Message(tmp_message, tmp_sent_recieved, tmp_address, tmp_message_timestamp);
+                m.add(tmp_msg);
 
             } while(c.moveToNext());
         }
         c.close();
-        db.close();*/
-
-    }
-
-    public ArrayList<Message> getMessages(String address){
-        ArrayList<Message> m = messages.get(address);
-
-        if(m == null){
-            ArrayList<Message> newMessages = new ArrayList<>();
-            messages.put(address,newMessages);
-            return newMessages;
-        }
-
-        return messages.get(address);
+        db.close();
+        return m;
     }
 
     public void addMessage(Message message){
+        messages.get(message.getAddress()).add(message);
 
-        getMessages(message.getAddress()).add(message);
-/*
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String message_query = "INSERT INTO messages (message, address, sent_received, message_timestamp) VALUES (?,?,?,?)";
-        db.execSQL(message_query,new String[] {message.getMessage(),message.getAddress(), String.valueOf(message.isReceived() ? 1 : 0),message.getMessageTimeStamp().toString()});
-*/
+        db.execSQL(message_query, new String[] {message.getMessage(), message.getAddress(), String.valueOf(message.isReceived() ? 1 : 0), message.getMessageTimeStamp().toString()});
         setChanged();
         notifyObservers(message);
     }
