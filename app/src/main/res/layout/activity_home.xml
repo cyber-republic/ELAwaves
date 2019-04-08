@@ -10,12 +10,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/home_navigation"/>
+        android:layout_above="@id/home_navigation"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/home_navigation"
-        android:layout_width="395dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +26,18 @@
     <fragment
         android:id="@+id/nav_host_fragment_home"
         android:name="androidx.navigation.fragment.NavHostFragment"
+<<<<<<< Updated upstream
         android:layout_width="0dp"
         android:layout_height="0dp"
+=======
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+>>>>>>> Stashed changes
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/home_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:navGraph="@navigation/home_graph" />
 </android.support.constraint.ConstraintLayout>
