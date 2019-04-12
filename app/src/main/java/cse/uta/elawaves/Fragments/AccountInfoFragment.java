@@ -81,6 +81,9 @@ public class AccountInfoFragment extends Fragment{
         try{
             info = CarrierImplementation.getCarrier().getSelfInfo();
             name = info.getName();
+            if(name.isEmpty()) {
+                name = "Click to set name";
+            }
             user.setText(name);
             Bitmap bmp = encodeAsBitmap(CarrierImplementation.getCarrier().getAddress());
             qrCodePic.setImageBitmap(bmp);
