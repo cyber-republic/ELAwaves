@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">ELAWaves</string>
+    <string name="app_name">ELAwaves</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="button_add_friend">Add Friend</string>
     <string name="sendMessage">Message</string>
+    <string name="elawaves">ELAwaves</string>
+    <string name="elawaves_logo">ELAWaves logo</string>
 </resources>

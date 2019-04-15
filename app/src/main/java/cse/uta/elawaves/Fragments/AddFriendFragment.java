@@ -48,7 +48,7 @@ public class AddFriendFragment extends Fragment{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
-        if(result != null){
+        if(result.getContents() != null){
             try {
                 System.out.println("QR: " + result.getContents());
                 CarrierImplementation.getCarrier().addFriend(result.getContents(),"Hello!");
@@ -56,7 +56,7 @@ public class AddFriendFragment extends Fragment{
                 e.printStackTrace();
             }
         }
-        Navigation.findNavController(getView()).navigate(R.id.action_addFriendFragment_to_friendsFragment);
+        Navigation.findNavController(getView()).popBackStack();
     }
 
     @Override

@@ -8,8 +8,4 @@
     <item
         android:id="@+id/myinfo_item"
         android:title="My Info" />
-    <item
-        android:id="@+id/wallet_item"
-        android:icon="@android:drawable/btn_star_big_on"
-        android:title="Wallet" />
 </menu>

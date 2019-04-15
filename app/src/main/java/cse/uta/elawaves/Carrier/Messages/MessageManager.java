@@ -34,49 +34,27 @@ public class MessageManager extends Observable {
     }
 
     private MessageManager(Context context){
-        /*dbHelper = new DatabaseHandler(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        String conversation_query = "SELECT message, address, sent_received, message_timestamp" +
-                " FROM messages" +
-                " ORDER BY message_timestamp ASC;";
-        Cursor c = db.rawQuery(conversation_query, null);
-        if (c.moveToFirst()){
-            do {
-                // Passing values
-                String message = c.getString(0);
-                String address = c.getString(1);
-                Boolean sent_recieved = Boolean.valueOf(c.getString(2));
-                Timestamp message_timestamp = Timestamp.valueOf(c.getString(3));
-
-                // Do something Here with values
-
-            } while(c.moveToNext());
-        }
-        c.close();
-        db.close();*/
-
+        dbHelper = new DatabaseHandler(context);
     }
 
     public ArrayList<Message> getMessages(String address){
-        ArrayList<Message> m = messages.get(address);
-
-        if(m == null){
-            ArrayList<Message> newMessages = new ArrayList<>();
-            messages.put(address,newMessages);
-            return newMessages;
+        ArrayList<Message> m;
+        if (messages.containsKey(address)) {
+            m = messages.get(address);
+        } else{
+            m = dbHelper.getMessages(address);
+            messages.put(address, m);
         }
 
-        return messages.get(address);
+        return m;
     }
 
     public void addMessage(Message message){
-        messages.get(message.getAddress()).add(message);
-/*
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String message_query = "INSERT INTO messages (message, address, sent_received, message_timestamp) VALUES (?,?,?,?)";
-        db.execSQL(message_query,new String[] {message.getMessage(),message.getAddress(), String.valueOf(message.isReceived() ? 1 : 0),message.getMessageTimeStamp().toString()});
-*/
+        getMessages(message.getAddress()).add(message);
+
+        dbHelper.saveMessage(message);
+
+        setChanged();
         notifyObservers(message);
     }
 

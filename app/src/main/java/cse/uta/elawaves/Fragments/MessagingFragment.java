@@ -20,10 +20,12 @@ import org.elastos.carrier.exceptions.CarrierException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
 import cse.uta.elawaves.Adapter.MessageAdapter;
+import cse.uta.elawaves.Carrier.Friends.FriendManager;
 import cse.uta.elawaves.Carrier.Messages.Message;
 import cse.uta.elawaves.Carrier.Messages.MessageManager;
 import cse.uta.elawaves.R;
@@ -31,27 +33,25 @@ import cse.uta.elawaves.R;
 public class MessagingFragment extends Fragment implements Observer, View.OnClickListener {
 
     private MessageAdapter adapter;
-    private List<Message> messages;
     private String address;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        address = getArguments().getString("address");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_messaging,container,false);
-        String address = getArguments().getString("address");
+
+        address = getArguments().getString("address");
 
         ListView messageListView =  view.findViewById(R.id.messagesList);
+            messageListView.setDivider(null);
 
         MessageManager.getInstance().addObserver(this);
 
-        messages = new ArrayList<>(MessageManager.getInstance().getMessages(address));
-
-        adapter = new MessageAdapter(getContext(), messages);
+        adapter = new MessageAdapter(Objects.requireNonNull(getActivity()), MessageManager.getInstance().getMessages(this.address));
             messageListView.setAdapter(adapter);
 
         Button sendMessageButton = view.findViewById(R.id.sendMessageButton);
@@ -67,17 +67,28 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
     @Override
     public void onDetach(){
         super.onDetach();
+        MessageManager.getInstance().deleteObserver(this);
     }
 
     public void sendMessage(View view, String message)
     {
+        // split messages larger than maxLen
+        int maxLen = 255;
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Message m = new Message(message, false, address, time);
+        ArrayList<String> messages = new ArrayList<String>();
+        while(message.length() > maxLen) {
+            messages.add(message.substring(0,maxLen));
+            message = message.substring(maxLen);
+        }
+        messages.add(message);
 
-        try {
-            MessageManager.getInstance().sendMessage(m);
-        } catch (CarrierException e) {
-            e.printStackTrace();
+        for(String messagePart : messages) {
+            Message m = new Message(messagePart, false, address, time);
+            try {
+                MessageManager.getInstance().sendMessage(m);
+            } catch (CarrierException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -109,7 +120,11 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
     @Override
     public void update(Observable observable, Object o) {
-        messages = new ArrayList<>(MessageManager.getInstance().getMessages(address));
-        adapter.notifyDataSetChanged();
+        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }

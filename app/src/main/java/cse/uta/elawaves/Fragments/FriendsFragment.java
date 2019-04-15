@@ -11,29 +11,33 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 
 import org.elastos.carrier.FriendInfo;
-import org.elastos.carrier.exceptions.CarrierException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
 import androidx.navigation.Navigation;
 import cse.uta.elawaves.Adapter.FriendInfoAdapter;
-import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.Carrier.Friends.FriendManager;
+import cse.uta.elawaves.Carrier.Messages.Message;
 import cse.uta.elawaves.R;
 
 public class FriendsFragment extends ListFragment implements OnItemClickListener, Observer {
 
     OnFriendSelectedListener callback;
-    List<FriendInfo> friends;
-    FriendInfoAdapter adapter;
-    private FriendManager manager;
+    FriendInfoAdapter<FriendInfo> adapter;
 
     @Override
-    public void update(Observable observable, Object o) {
-        friends = FriendManager.getInstance().getFriends();
-        adapter.notifyDataSetChanged();
+    public void update(Observable observable, final Object o) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.clear();
+                adapter.addAll(FriendManager.getInstance().getFriends());
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     public interface OnFriendSelectedListener{
@@ -44,12 +48,12 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
-        manager = FriendManager.getInstance();
+        FriendManager manager = FriendManager.getInstance();
             manager.addObserver(this);
 
-        friends = manager.getFriends();
+        List<FriendInfo> friends = manager.getFriends();
 
-        adapter = new FriendInfoAdapter(getActivity(), friends);
+        adapter = new FriendInfoAdapter<>(Objects.requireNonNull(getActivity()), friends);
 
         setListAdapter(adapter);
 
@@ -81,7 +85,7 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
         callback.onFriendSelected(friend);
 
         Bundle bundle = new Bundle();
-        bundle.putString("address",friend.getUserId());
+            bundle.putString("address",friend.getUserId());
 
         Navigation.findNavController(view).navigate(R.id.action_friendsFragment_to_MessagingFragment,bundle);
     }
@@ -100,6 +104,7 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
     @Override
     public void onDetach(){
         callback = null;
+        FriendManager.getInstance().deleteObserver(this);
         super.onDetach();
     }
 }
