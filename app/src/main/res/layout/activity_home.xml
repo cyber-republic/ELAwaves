@@ -26,13 +26,8 @@
     <fragment
         android:id="@+id/nav_host_fragment_home"
         android:name="androidx.navigation.fragment.NavHostFragment"
-<<<<<<< Updated upstream
         android:layout_width="0dp"
         android:layout_height="0dp"
-=======
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
->>>>>>> Stashed changes
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/home_navigation"
         app:layout_constraintEnd_toEndOf="parent"
