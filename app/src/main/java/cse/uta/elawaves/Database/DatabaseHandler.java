@@ -59,11 +59,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             do {
                 // Passing values
                 String tmp_message = c.getString(0);
-                Boolean tmp_sent_recieved = Boolean.valueOf(c.getString(1));
+                Boolean tmp_sent_received = c.getString(1).equals("1");
                 Timestamp tmp_message_timestamp = Timestamp.valueOf(c.getString(2));
 
                 // Do something Here with values
-                Message tmp_msg = new Message(tmp_message, tmp_sent_recieved, address, tmp_message_timestamp);
+                Message tmp_msg = new Message(tmp_message, tmp_sent_received, address, tmp_message_timestamp);
                 messages.add(tmp_msg);
 
             } while(c.moveToNext());

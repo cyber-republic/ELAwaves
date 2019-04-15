@@ -47,6 +47,7 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
         address = getArguments().getString("address");
 
         ListView messageListView =  view.findViewById(R.id.messagesList);
+            messageListView.setDivider(null);
 
         MessageManager.getInstance().addObserver(this);
 
@@ -71,13 +72,23 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
     public void sendMessage(View view, String message)
     {
+        // split messages larger than maxLen
+        int maxLen = 255;
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Message m = new Message(message, false, address, time);
+        ArrayList<String> messages = new ArrayList<String>();
+        while(message.length() > maxLen) {
+            messages.add(message.substring(0,maxLen));
+            message = message.substring(maxLen);
+        }
+        messages.add(message);
 
-        try {
-            MessageManager.getInstance().sendMessage(m);
-        } catch (CarrierException e) {
-            e.printStackTrace();
+        for(String messagePart : messages) {
+            Message m = new Message(messagePart, false, address, time);
+            try {
+                MessageManager.getInstance().sendMessage(m);
+            } catch (CarrierException e) {
+                e.printStackTrace();
+            }
         }
     }
 
