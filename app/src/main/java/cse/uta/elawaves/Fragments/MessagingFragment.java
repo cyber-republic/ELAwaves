@@ -47,6 +47,7 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
         address = getArguments().getString("address");
 
         ListView messageListView =  view.findViewById(R.id.messagesList);
+            messageListView.setDivider(null);
 
         MessageManager.getInstance().addObserver(this);
 

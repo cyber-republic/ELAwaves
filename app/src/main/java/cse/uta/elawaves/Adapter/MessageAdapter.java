@@ -26,8 +26,11 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
         Message message = getItem(position);
 
-        if(convertView == null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.message_list_item,parent,false);
+        if(message.isReceived()){
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.message_list_item_received,parent,false);
+        }else{
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.message_list_item_sent,parent,false);
+        }
 
         TextView messageView = convertView.findViewById(R.id.messageTextView);
             messageView.setText(message.getMessage());
