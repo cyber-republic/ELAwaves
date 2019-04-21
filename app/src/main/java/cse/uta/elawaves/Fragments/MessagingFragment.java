@@ -34,6 +34,7 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
     private MessageAdapter adapter;
     private String address;
+    private ListView messageListView;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -46,7 +47,7 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
         address = getArguments().getString("address");
 
-        ListView messageListView =  view.findViewById(R.id.messagesList);
+        messageListView =  view.findViewById(R.id.messagesList);
             messageListView.setDivider(null);
 
         MessageManager.getInstance().addObserver(this);
@@ -56,6 +57,8 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
         Button sendMessageButton = view.findViewById(R.id.sendMessageButton);
             sendMessageButton.setOnClickListener(this);
+
+        scrollList();
         return view;
     }
 
@@ -115,6 +118,7 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
         if(!messageText.getText().toString().equals("")) {
             this.sendMessage(v, messageText.getText().toString());
             messageText.setText("");
+            scrollList();
         }
     }
 
@@ -124,6 +128,16 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
             @Override
             public void run() {
                 adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void scrollList() {
+        messageListView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Select the last row so it will scroll into view...
+                messageListView.setSelection(adapter.getCount() - 1);
             }
         });
     }

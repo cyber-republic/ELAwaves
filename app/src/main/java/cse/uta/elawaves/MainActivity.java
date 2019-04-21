@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity{
         String rootPath = getApplicationContext().getFilesDir().getParent();
         try{
             ElastosWalletUtils.InitConfig(this,rootPath);
-            WalletImplementation.getInstance(rootPath);
+            //WalletImplementation.getInstance(rootPath);
         }catch (WalletException e){
             e.printStackTrace();
         }
