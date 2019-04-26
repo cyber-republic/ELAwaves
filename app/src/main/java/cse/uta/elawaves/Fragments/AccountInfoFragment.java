@@ -45,10 +45,14 @@ public class AccountInfoFragment extends Fragment{
     public final static int WIDTH = 500;
     public static int white = 0xFFFFFFFF;
     public static int black = 0xFF000000;
-    TextView user;
+    TextView userView;
+    TextView emailView;
+    TextView phoneView;
     ImageView profilePic;
     private static UserInfo info;
     String name;
+    String email;
+    String phone;
     private static final int PICK_IMAGE = 100;
     Uri imageURI;
 
@@ -76,15 +80,29 @@ public class AccountInfoFragment extends Fragment{
         ImageView qrCodePic = view.findViewById(R.id.userQRCode);
 
         profilePic.setImageBitmap(decodeSampleBitmapFromResource(getResources(),R.drawable.profilepictest,100,100));
-        user = view.findViewById(R.id.userName);
+
+        userView = view.findViewById(R.id.userName);
+        emailView = view.findViewById(R.id.email_text);
+        phoneView = view.findViewById(R.id.phone_text);
 
         try{
             info = CarrierImplementation.getCarrier().getSelfInfo();
             name = info.getName();
+            email = info.getEmail();
+            phone = info.getPhone();
+
             if(name.isEmpty()) {
                 name = "Click to set name";
             }
-            user.setText(name);
+            if(email.isEmpty()) {
+                email = "Click to set email";
+            }
+            if(phone.isEmpty()) {
+                phone = "Click to set phone number";
+            }
+            userView.setText(name);
+            emailView.setText(email);
+            phoneView.setText(phone);
             Bitmap bmp = encodeAsBitmap(CarrierImplementation.getCarrier().getAddress());
             qrCodePic.setImageBitmap(bmp);
 
@@ -96,7 +114,7 @@ public class AccountInfoFragment extends Fragment{
         }
 
         //When the display name is clicked, will prompt the user if they want to change their current display name
-        user.setOnClickListener(new View.OnClickListener() {
+        userView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder changeName;
@@ -120,7 +138,7 @@ public class AccountInfoFragment extends Fragment{
                                         } catch (CarrierException e) {
                                             e.printStackTrace();
                                         }
-                                        user.setText(info.getName());
+                                        userView.setText(info.getName());
 
                                     }
                                 });
@@ -142,6 +160,106 @@ public class AccountInfoFragment extends Fragment{
                         });
                 AlertDialog alert = changeName.create();
                 alert.setTitle("Change Display Name");
+                alert.show();
+            }
+        });
+        //When the email address is clicked, will prompt the user if they want to change their current email address
+        emailView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder changeEmail;
+                changeEmail = new AlertDialog.Builder(getActivity());
+                changeEmail.setMessage("Do you want to change your email address?").setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                View userInput = (LayoutInflater.from(getActivity()).inflate(R.layout.user_input,null));
+                                final AlertDialog.Builder enterEmail;
+                                enterEmail = new AlertDialog.Builder(getActivity());
+                                enterEmail.setView(userInput);
+                                final EditText newEmail = (EditText) userInput.findViewById(R.id.changeName);
+
+                                enterEmail.setMessage("Enter your email address:").setCancelable(false).setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        info.setEmail(newEmail.getText().toString());
+                                        try {
+                                            CarrierImplementation.getCarrier().setSelfInfo(info);
+                                        } catch (CarrierException e) {
+                                            e.printStackTrace();
+                                        }
+                                        emailView.setText(info.getEmail());
+
+                                    }
+                                });
+
+                                AlertDialog alert2 = enterEmail.create();
+                                alert2.setTitle("Change Email Address");
+                                alert2.show();
+
+                            }
+
+
+                        })
+                        .setNegativeButton("No ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+
+                            }
+                        });
+                AlertDialog alert = changeEmail.create();
+                alert.setTitle("Change Email Address");
+                alert.show();
+            }
+        });
+        //When the phone number is clicked, will prompt the user if they want to change their current phone number
+        phoneView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder changePhone;
+                changePhone = new AlertDialog.Builder(getActivity());
+                changePhone.setMessage("Do you want to change your phone number?").setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                View userInput = (LayoutInflater.from(getActivity()).inflate(R.layout.user_input,null));
+                                final AlertDialog.Builder enterPhone;
+                                enterPhone = new AlertDialog.Builder(getActivity());
+                                enterPhone.setView(userInput);
+                                final EditText newPhone = (EditText) userInput.findViewById(R.id.changeName);
+
+                                enterPhone.setMessage("Enter your phone number:").setCancelable(false).setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        info.setPhone(newPhone.getText().toString());
+                                        try {
+                                            CarrierImplementation.getCarrier().setSelfInfo(info);
+                                        } catch (CarrierException e) {
+                                            e.printStackTrace();
+                                        }
+                                        phoneView.setText(info.getPhone());
+
+                                    }
+                                });
+
+                                AlertDialog alert2 = enterPhone.create();
+                                alert2.setTitle("Change Phone Number");
+                                alert2.show();
+
+                            }
+
+
+                        })
+                        .setNegativeButton("No ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+
+                            }
+                        });
+                AlertDialog alert = changePhone.create();
+                alert.setTitle("Change Phone Number");
                 alert.show();
             }
         });
