@@ -13,6 +13,7 @@ import org.elastos.carrier.FriendInfo;
 
 import java.util.List;
 
+import cse.uta.elawaves.Carrier.Friends.FriendManager;
 import cse.uta.elawaves.R;
 
 public class FriendInfoAdapter<T extends FriendInfo> extends ArrayAdapter<T> {
@@ -36,7 +37,8 @@ public class FriendInfoAdapter<T extends FriendInfo> extends ArrayAdapter<T> {
         FriendInfo friend =  friends.get(position);
 
         TextView nick = friendItem.findViewById(R.id.friend_nick_textview);
-            nick.setText(friend.getName());
+            nick.setText(friend.getName() +
+                (FriendManager.getInstance().isFriendConnected(friend.getUserId()) ? "" : " (offline)"));
 
         TextView address = friendItem.findViewById(R.id.friend_address_textview);
             address.setText(friend.getUserId());
