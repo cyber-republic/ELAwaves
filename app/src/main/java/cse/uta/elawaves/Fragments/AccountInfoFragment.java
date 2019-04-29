@@ -68,7 +68,7 @@ public class AccountInfoFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_account_info,container,false);
-        profilePic = view.findViewById(R.id.profilePic);
+        profilePic = view.findViewById(R.id.profile_picture);
         profilePic.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
