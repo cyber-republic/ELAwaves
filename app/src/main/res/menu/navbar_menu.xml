@@ -7,5 +7,10 @@
         android:title="Friends" />
     <item
         android:id="@+id/myinfo_item"
+        android:icon="@drawable/user"
         android:title="My Info" />
+    <item
+        android:id="@+id/wallet_item"
+        android:icon="@drawable/wallet"
+        android:title="My Wallet" />
 </menu>
