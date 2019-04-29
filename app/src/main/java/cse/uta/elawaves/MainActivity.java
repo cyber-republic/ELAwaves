@@ -17,7 +17,8 @@ import cse.uta.elawaves.Wallet.WalletImplementation;
 public class MainActivity extends AppCompatActivity{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -30,15 +31,6 @@ public class MainActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        // Startup Wallet
-        String rootPath = getApplicationContext().getFilesDir().getParent();
-        try{
-            ElastosWalletUtils.InitConfig(this,rootPath);
-            //WalletImplementation.getInstance(rootPath);
-        }catch (WalletException e){
-            e.printStackTrace();
-        }
-
         if (CarrierImplementation.isReady()){
             Intent i = new Intent(getApplicationContext(),HomeActivity.class);
             startActivity(i);
@@ -46,6 +38,18 @@ public class MainActivity extends AppCompatActivity{
         }
 
         CarrierImplementation.onReady(this);
+
+        // Startup Wallet
+        String rootPath = getApplicationContext().getFilesDir().getParent();
+        try
+        {
+            ElastosWalletUtils.InitConfig(this,rootPath);
+            WalletImplementation.getInstance(rootPath, "masterWalletID", "", "elastos2018");
+        }
+        catch (WalletException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
