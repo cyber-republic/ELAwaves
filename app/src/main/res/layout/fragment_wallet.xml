@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/totalBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="83dp"
+                android:layout_marginTop="84dp"
+                android:layout_marginEnd="84dp"
+                android:layout_marginBottom="343dp"
+                android:fontFamily="synthese, sans-serif;"
+                android:text="Total Balance"
+                android:textColor="@color/elaBlueGrey"
+                android:textFontWeight="200"
+                android:textSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/Balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="83dp"
+                android:layout_marginTop="128dp"
+                android:layout_marginEnd="84dp"
+                android:layout_marginBottom="343dp"
+                android:fontFamily="synthese, sans-serif;"
+                android:text="Balance"
+                android:textColor="@color/black"
+                android:textFontWeight="200"
+                android:textSize="48dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="60dp"
+                android:layout_height="72dp"
+                android:background="@color/elaBlueGrey"
+                app:srcCompat="@drawable/request"
+                tools:layout_editor_absoluteX="73dp"
+                tools:layout_editor_absoluteY="265dp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="199dp"
+                android:layout_height="72dp"
+                android:background="@color/elaBlueGrey"
+                android:text="Request Transaction"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="133dp"
+                tools:layout_editor_absoluteY="265dp" />
+
+            <TextView
+                android:id="@+id/qr_code_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="428dp"
+                android:layout_marginBottom="123dp"
+                android:text="Receive Request"
+                android:textColor="@color/elaBlue"
+                android:textSize="23dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/userQRCode"
+                android:layout_width="0dp"
+                android:layout_height="127dp"
+                android:layout_marginTop="475dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/qrcode" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Switch"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="586dp" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
