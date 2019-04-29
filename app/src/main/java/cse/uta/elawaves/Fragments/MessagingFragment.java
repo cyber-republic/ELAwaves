@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.elastos.carrier.exceptions.CarrierException;
 
@@ -34,6 +35,8 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
 
     private MessageAdapter adapter;
     private String address;
+    private String friendName;
+    private TextView friendNameView;
     private ListView messageListView;
 
     @Override
@@ -46,6 +49,10 @@ public class MessagingFragment extends Fragment implements Observer, View.OnClic
         View view = inflater.inflate(R.layout.fragment_messaging,container,false);
 
         address = getArguments().getString("address");
+        friendName = getArguments().getString("name");
+
+        friendNameView = view.findViewById(R.id.recipientText);
+        friendNameView.setText(friendName);
 
         messageListView =  view.findViewById(R.id.messagesList);
             messageListView.setDivider(null);

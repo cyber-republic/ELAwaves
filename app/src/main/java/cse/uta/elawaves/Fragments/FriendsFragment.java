@@ -86,6 +86,7 @@ public class FriendsFragment extends ListFragment implements OnItemClickListener
 
         Bundle bundle = new Bundle();
             bundle.putString("address",friend.getUserId());
+            bundle.putString("name", friend.getName());
 
         Navigation.findNavController(view).navigate(R.id.action_friendsFragment_to_MessagingFragment,bundle);
     }

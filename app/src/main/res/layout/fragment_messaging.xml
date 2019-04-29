@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +19,7 @@
             android:id="@+id/textInput"
             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/sendMessage"
@@ -29,7 +29,7 @@
             android:id="@+id/sendMessageButton"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="128dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:drawable/ic_menu_send"
             android:backgroundTint="@color/colorPrimary" />
@@ -48,7 +48,7 @@
         <TextView
             android:id="@+id/recipientText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <ListView
