@@ -15,6 +15,7 @@
             android:id="@+id/action_friendsFragment_to_MessagingFragment"
             app:destination="@id/MessagingFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/addFriendFragment"
         android:name="cse.uta.elawaves.Fragments.AddFriendFragment"
@@ -30,9 +31,16 @@
         android:name="cse.uta.elawaves.Fragments.MessagingFragment"
         android:label="fragment_messaging"
         tools:layout="@layout/fragment_messaging" />
+
     <fragment
         android:id="@+id/accountInfoFragment"
         android:name="cse.uta.elawaves.Fragments.AccountInfoFragment"
         android:label="fragment_account_info"
         tools:layout="@layout/fragment_account_info" />
+
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="cse.uta.elawaves.Fragments.WalletFragment"
+        android:label="fragment_wallet"
+        tools:layout="@layout/fragment_wallet" />
 </navigation>
