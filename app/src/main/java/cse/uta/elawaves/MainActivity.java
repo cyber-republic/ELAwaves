@@ -14,7 +14,8 @@ import org.elastos.carrier.exceptions.CarrierException;
 import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.Wallet.WalletImplementation;
 
-public class MainActivity extends AppCompatActivity{
+public class
+MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

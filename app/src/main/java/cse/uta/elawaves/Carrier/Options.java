@@ -5,6 +5,8 @@ import org.elastos.carrier.Carrier;
 import java.io.File;
 import java.util.ArrayList;
 
+// Configuration for Carrier Network connection/use
+
 class Options extends Carrier.Options {
     Options(String rootPath){
         super();

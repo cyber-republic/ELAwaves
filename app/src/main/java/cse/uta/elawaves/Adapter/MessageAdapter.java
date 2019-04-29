@@ -22,10 +22,12 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
     @NonNull
     @Override
+    // Function to obtain and display messages between a friend
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
 
         Message message = getItem(position);
 
+        // Conditional to differentiate between sent and received messages
         if(message.isReceived()){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.message_list_item_received,parent,false);
         }else{

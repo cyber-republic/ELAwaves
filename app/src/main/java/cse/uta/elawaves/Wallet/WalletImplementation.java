@@ -24,6 +24,7 @@ public class WalletImplementation {
         return instance;
     }
 
+    // Establishes Cryptocurrency Wallet using ELA
     private WalletImplementation(String path,
                                  String masterWalletId, String phrasePassword, String payPassword)
     {

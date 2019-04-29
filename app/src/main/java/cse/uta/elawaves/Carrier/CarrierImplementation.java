@@ -28,6 +28,7 @@ public class CarrierImplementation {
         return instance;
     }
 
+    // Establishes connection to and function of app with Carrier Network
     private CarrierImplementation(Context context) throws CarrierException {
         Options options = new Options(context.getFilesDir().getParent());
 
