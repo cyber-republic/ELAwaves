@@ -77,7 +77,7 @@
                 tools:layout_editor_absoluteY="265dp" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/send_button"
                 android:layout_width="199dp"
                 android:layout_height="72dp"
                 android:background="@color/elaBlueGrey"
