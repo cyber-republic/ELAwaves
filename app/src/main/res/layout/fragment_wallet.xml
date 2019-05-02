@@ -63,52 +63,54 @@
                 android:textSize="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.508"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="60dp"
-                android:layout_height="72dp"
-                android:background="@color/elaBlueGrey"
-                app:srcCompat="@drawable/request"
-                tools:layout_editor_absoluteX="73dp"
-                tools:layout_editor_absoluteY="265dp" />
-
             <Button
                 android:id="@+id/send_button"
-                android:layout_width="199dp"
-                android:layout_height="72dp"
+                android:layout_width="260dp"
+                android:layout_height="59dp"
+                android:layout_marginStart="63dp"
+                android:layout_marginTop="237dp"
+                android:layout_marginEnd="63dp"
+                android:layout_marginBottom="64dp"
                 android:background="@color/elaBlueGrey"
                 android:text="Send Transaction"
                 android:textColor="@color/white"
-                tools:layout_editor_absoluteX="133dp"
-                tools:layout_editor_absoluteY="265dp" />
+                app:layout_constraintBottom_toTopOf="@+id/qr_code_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.444"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/qr_code_text"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="428dp"
-                android:layout_marginBottom="123dp"
+                android:layout_height="74dp"
+                android:layout_marginBottom="80dp"
                 android:text="Receive Transaction"
                 android:textColor="@color/elaBlue"
                 android:textSize="23dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/switch1"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/send_button"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/userQRCode"
                 android:layout_width="0dp"
-                android:layout_height="127dp"
-                android:layout_marginTop="475dp"
+                android:layout_height="112dp"
+                android:layout_marginTop="400dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/qrcode" />
 
             <Switch
@@ -116,8 +118,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Switch"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="586dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/userQRCode"
+                app:layout_constraintTop_toBottomOf="@+id/qr_code_text" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
