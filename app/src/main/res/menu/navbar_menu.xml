@@ -9,8 +9,8 @@
         android:id="@+id/myinfo_item"
         android:icon="@drawable/user"
         android:title="My Info" />
-    <item
+    <!--item
         android:id="@+id/wallet_item"
         android:icon="@drawable/wallet"
-        android:title="My Wallet" />
+        android:title="My Wallet" /-->
 </menu>

@@ -47,9 +47,9 @@ public class HomeActivity extends AppCompatActivity implements FriendsFragment.O
             case R.id.myinfo_item:
                 Navigation.findNavController(this,R.id.nav_host_fragment_home).navigate(R.id.accountInfoFragment);
                 break;
-            case R.id.wallet_item:
-                Navigation.findNavController(this,R.id.nav_host_fragment_home).navigate(R.id.walletFragment);
-                break;
+            //case R.id.wallet_item:
+            //    Navigation.findNavController(this,R.id.nav_host_fragment_home).navigate(R.id.walletFragment);
+            //    break;
         }
         return true;
     }
