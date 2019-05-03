@@ -3,16 +3,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +33,10 @@ import org.elastos.carrier.Carrier;
 import org.elastos.carrier.UserInfo;
 import org.elastos.carrier.exceptions.CarrierException;
 
-import java.net.URI;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import cse.uta.elawaves.Carrier.CarrierImplementation;
 import cse.uta.elawaves.HomeActivity;
@@ -60,7 +65,14 @@ public class AccountInfoFragment extends Fragment{
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
-
+        // Load saved profile picture
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String profilePicString = sharedPreferences.getString("profile_pic",null);
+        if(profilePicString != null) {
+            byte [] image = Base64.decode(profilePicString,Base64.DEFAULT);
+            Bitmap imageBitmap = BitmapFactory.decodeByteArray(image,0,image.length);
+            profilePic.setImageBitmap(imageBitmap);
+        }
     }
 
 
@@ -292,6 +304,21 @@ public class AccountInfoFragment extends Fragment{
         super.onActivityResult(requestCode,resultCode,data);
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             imageURI = data.getData();
+            try {
+                // Save image
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),imageURI);
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+
+                editor.putString("profile_pic", Base64.encodeToString(baos.toByteArray(),Base64.DEFAULT));
+
+                editor.commit();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             profilePic.setImageURI(imageURI);
         }
     }
